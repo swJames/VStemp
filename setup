@@ -4,9 +4,9 @@ from installer import highlight
 from commands import getstatusoutput
 from shutil import copyfile, copymode
 
-#if getstatusoutput("whoami")[1] != 'root':
-#	print highlight('[You are not root. Please execute this file as root]', False)
-#	sys.exit()
+if getstatusoutput("whoami")[1] != 'root':
+	print highlight('[You are not root. Please execute this file as root]', False)
+	sys.exit()
 
 scripts_dir = '/opt/vstemp'
 
