@@ -1,0 +1,45 @@
+VStemp Daemon 1.0 
+ 
+Daemon for controlling the fan speed on Dell Vostro 3560 laptops under linux. 
+The daemon should equally well work on Inspiron laptops, as well as any Dell 
+laptop that works with i8k. 
+ 
+Requirements: 
+ 
+-lm_sensors 
+-i8k 
+-python-daemon 
+ 
+Usage 
+        /etc/init.d/vstempd start|stop|restart 
+ 
+The default setup as follows: 
+ 
+Fan switches at full power when the highest temperature is reached: 
+56.0°C and above 
+        The fan will remain at that speed for the following 7 iterations 
+        regardless of the measurements taken in that time. If the temperature 
+        after that is still above 56.0°C, the process will start over. 
+        One iteration is equal to the REFRESHRATE in seconds(config file) 
+51.0 - medium speed: 
+        This defines the mid-range so anything between 29.0°C and 56.0°C 
+        Measurement will be taken each 15 seconds. 
+44.0°C - low end: 
+        The fan will be kept at medium and will run the same way until 
+        it drops 15.0°C below the low temp. 
+ 
+If you would like to change that configuration, edit the /opt/vstemp/config file. 
+After that restart the daemon: 
+/etc/init.d/vstemp.d restart 
+
+Installation:
+Simply run
+	./setup
+As root.
+ 
+Released under GPLv3 
+ 
+For more information 
+Alexander Hristov 
+http://github.com/alxkls 
+http://alxkls.com 

@@ -1,0 +1,16 @@
+# Configure your preferences. Please bare in mind that all values should be float values(temperatures in centigrate).
+# Please take a good note of your sensors HIGH and CRITICAL Values. The parser shall
+# read those and will take note of them so please do not ignore them
+
+# The low temperature end. The fans will be turned off 6 degrees below this point.
+LOW = 44.0
+
+# The medium temperature. Above this value the fan will be put in the slow mode.
+MED = 51.0
+
+# The high end. When this temperature is reached, the fan will be turned to the highest mode until the LOW point 
+# is reached.
+HIGH = 56.0
+
+# Refresh rate in seconds. A measurment will be taken in intervals of X seconds where X is REFRESHRATE
+REFRESHRATE = 15

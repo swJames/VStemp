@@ -1,0 +1,88 @@
+#!/usr/bin/env python
+import os, sys
+from installer import highlight
+from commands import getstatusoutput
+from shutil import copyfile, copymode
+
+#if getstatusoutput("whoami")[1] != 'root':
+#	print highlight('[You are not root. Please execute this file as root]', False)
+#	sys.exit()
+
+scripts_dir = '/opt/vstemp'
+
+try:
+	import daemon
+except:
+	print highlight.highlight('[You need to install python-daemon before installing VStemp]', False)
+	print highlight.highlight('[Visit https://pypi.python.org/pypi/python-daemon For more information]')
+	sys.exit()
+print highlight.highlight('[python-daemon has been detected on your system]', True)
+
+if os.path.isfile('/etc/init.d/i8k'):
+	print highlight.highlight('[i8k daemon has been detected on your system]', True)
+else:
+	print highlight.highlight('[i8k daemon could not be located. Please install it first]', False)
+	sys.exit()
+
+if not os.path.exists(scripts_dir):
+	try:
+		os.makedirs(scripts_dir)
+	except:
+		print highlght.highlight('[' + scripts_dir + ' could not be created. Please create it manually and try again]', False)
+		sys.exit()
+
+print highlight.highlight('[' + scripts_dir + ' has been created succesfuly]', True)
+
+opt_files = [
+	'installer/vstemp.py',
+	'installer/config',
+	'installer/highlight.py',
+	'installer/__init__.py'
+	]
+
+failed = False
+for i in opt_files:
+	try:
+		filename = i.split('/')[1]
+		copyfile(i, scripts_dir + '/' + filename)
+	except:
+		failed = True
+
+if failed == True:
+	print highlight.highlight('[The main files could not be copied. Aborting Installation]', False)
+	print highlight.highlight('[Please copy the following files in /opt/vstemp/]', True)
+	files_to_copy = ', '.join(opt_files)
+	print highlight.highlight('[' + files_to_copy + ']', True)
+	sys.exit()
+else:
+	print highlight.highlight('[The main required files were copied succesfully]', True)
+
+helper_file = 'installer/vstemp'
+
+try:
+	filename = helper_file.split('/')[1]
+	copyfile(helper_file, '/usr/bin/' + filename)
+	copymode(helper_file, '/usr/bin/' + filename)
+except:
+	print highlight.highlight('[' + helper_file + ' could not be copied. Please copy this file in /usr/bin/share ]', False)
+
+logfile = 'installer/vstemplog/vstemp'
+
+try:
+	os.makedirs('/var/log/vstemplog')
+	copyfile(logfile, '/var/log/vstemplog/' + filename)
+	copymode(logfile, '/var/log/vstemplog/' + filename)
+except:
+	print highlight.highlight('[Could not create vstemp log file in /var/log/vsemplog]', False)
+	
+
+daemon_file = 'installer/vstempd'
+
+try:
+	filename = daemon_file.split('/')[1]
+	copyfile(daemon_file, '/etc/init.d/'+filename)
+	copymode(daemon_file, '/etc/init.d/'+filename)
+except:
+	print highlight.highlight('[' + daemon_file + ' could not be copied to /etc/init.d/]', False)
+	print highlight.highlight('[THE INSTALLATION COULD NOT BE COMPLEATED! EXITING]', False)
+	sys.exit()
