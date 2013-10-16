@@ -28,7 +28,13 @@ if user != 'root':
 		sys.exit()
 		
 del user
-print highlight("[STARTING VSTEMP DAEMON]", True)
+if sys.argv[1] == "start":
+        print highlight("[STARTING VSTEMP DAEMON]", True)
+elif sys.argv[1] == "stop":
+        print highlight("[STOPPING VSTEMP DAEMON]", True)
+elif sys.argv[1] == "restart":
+        print highlight("[RESTARTING VSTEMP DAEMON]", True)
+
 class App():
 	def __init__(self):
 		self.stdin_path = '/dev/null'
