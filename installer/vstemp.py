@@ -53,7 +53,7 @@ class getTemperature:
 		elif temp >= self.config['MED']:
 			self.fanspeed = 1
 		elif temp <= self.config['LOW']:
-			lowtemp = self.config['LOW'] - 15
+			lowtemp = self.config['LOW'] - 15.0
 			if temp < lowtemp:
 				self.fanspeed = 0
 			else:
